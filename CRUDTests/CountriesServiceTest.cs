@@ -54,11 +54,11 @@ namespace CRUDTests
 
             CountryAddRequest? request1 = new CountryAddRequest() { CountryName = "USA" };
             CountryAddRequest? request2 = new CountryAddRequest() { CountryName = "USA" };
-            _countriesService.AddCountry(request1);
+
             //Assert
             Assert.Throws<ArgumentException>(() =>
             {
-
+                _countriesService.AddCountry(request1);
                 _countriesService.AddCountry(request2);
             });
         }
@@ -84,6 +84,55 @@ namespace CRUDTests
             // 3. Gönderdiğimiz veriyle kaydedilen veri uyuşmalı!
             Assert.Equal(request.CountryName, response?.CountryName);
 
+
+        }
+
+
+
+        //Test when the countrylist is empty
+        [Fact]
+        public void GetAllCountries_EmptyList()
+        {
+
+            //Act
+            List<CountryResponse> response = _countriesService.GetAllCountries();
+
+            //Assert
+            Assert.Empty(response);
+
+        }
+
+
+        //Test when everything is okay
+        [Fact]
+        public void GetAllCountries_AddFewCountries()
+        {
+
+            List<CountryAddRequest> country_list_request = new List<CountryAddRequest>() {
+               new CountryAddRequest(){CountryName="Türkiye"},
+               new CountryAddRequest(){CountryName="Almanya"},
+               new CountryAddRequest(){CountryName="Fransa"},
+            };
+
+            //Arrange
+
+            List<CountryResponse> dummy_country_list_response = new List<CountryResponse>();
+
+            foreach (CountryAddRequest countryAddRequest in country_list_request)
+            {
+                dummy_country_list_response.Add(_countriesService.AddCountry(countryAddRequest));
+            }
+
+            //Act
+
+            List<CountryResponse> response = _countriesService.GetAllCountries();
+
+            //Assert
+
+            foreach (CountryResponse expected in dummy_country_list_response)
+            {
+                Assert.Contains(expected, response);
+            }
 
         }
 
