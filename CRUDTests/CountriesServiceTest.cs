@@ -7,11 +7,16 @@ namespace CRUDTests
     public class CountriesServiceTest
     {
         private readonly ICountriesService _countriesService;
+
+        //Constructor
         public CountriesServiceTest()
         {
             _countriesService = new CountriesService();
         }
 
+
+
+        #region AddCountry
         //Test when the CountryAddRequest is null
         [Fact]
         public void AddCountry_Null()
@@ -24,7 +29,7 @@ namespace CRUDTests
             Assert.Throws<ArgumentNullException>(() =>
             {
                 //Act
-                _countriesService.AddCountry(countryAddRequest);
+                _countriesService.AddCountry(countryAddRequest!);
             });
         }
 
@@ -84,11 +89,16 @@ namespace CRUDTests
             // 3. Gönderdiğimiz veriyle kaydedilen veri uyuşmalı!
             Assert.Equal(request.CountryName, response?.CountryName);
 
+            List<CountryResponse> countryListFromService = _countriesService.GetAllCountries();
+
+            Assert.Contains(response, countryListFromService);
+
 
         }
+        #endregion
 
 
-
+        #region GetCountries
         //Test when the countrylist is empty
         [Fact]
         public void GetAllCountries_EmptyList()
@@ -108,33 +118,101 @@ namespace CRUDTests
         public void GetAllCountries_AddFewCountries()
         {
 
-            List<CountryAddRequest> country_list_request = new List<CountryAddRequest>() {
-               new CountryAddRequest(){CountryName="Türkiye"},
-               new CountryAddRequest(){CountryName="Almanya"},
-               new CountryAddRequest(){CountryName="Fransa"},
+            //Create some dummy ruquest
+            List<CountryAddRequest> dummy_request = new List<CountryAddRequest>() {
+                new CountryAddRequest(){CountryName="Türkiye"},
+                new CountryAddRequest(){CountryName="Almanya"},
+                new CountryAddRequest(){CountryName="Fransa"},
+                new CountryAddRequest(){CountryName="Rusya"},
+
             };
 
-            //Arrange
+            //Create one fake response
+            List<CountryResponse> fake_response = new List<CountryResponse>();
 
-            List<CountryResponse> dummy_country_list_response = new List<CountryResponse>();
+            //Add all the dummy request to the response
 
-            foreach (CountryAddRequest countryAddRequest in country_list_request)
+            foreach (CountryAddRequest countryAddRequest in dummy_request)
             {
-                dummy_country_list_response.Add(_countriesService.AddCountry(countryAddRequest));
+                fake_response.Add(_countriesService.AddCountry(countryAddRequest)!);
             }
 
-            //Act
+            //Get response from service
+            List<CountryResponse> response_from_service = _countriesService.GetAllCountries();
 
-            List<CountryResponse> response = _countriesService.GetAllCountries();
 
-            //Assert
+            //Check if both of them are equal or not.
 
-            foreach (CountryResponse expected in dummy_country_list_response)
+            foreach (CountryResponse expectedResponse in fake_response)
             {
-                Assert.Contains(expected, response);
+                Assert.Contains(expectedResponse, response_from_service);
             }
 
         }
+
+        #endregion
+
+        #region GetCountryById
+        [Fact]
+        public void GetCountryById_NullID()
+        {
+            //Arrange
+            Guid? countryId = null;
+
+            //Assert
+
+            //Act
+            Assert.Null(_countriesService.GetCountryById(countryId!));
+
+
+        }
+
+        [Fact]
+        public void GetCountryById_NotFoundCountry()
+        {
+            List<CountryAddRequest> dummy_countries_list_request = new List<CountryAddRequest>() {
+                new CountryAddRequest(){CountryName="Türkiye"},
+                new CountryAddRequest(){CountryName="Fransa"},
+                new CountryAddRequest(){CountryName="Amerika"}
+
+            };
+
+            foreach (CountryAddRequest countryAddRequest in dummy_countries_list_request)
+            {
+                _countriesService.AddCountry(countryAddRequest);
+            }
+
+            Assert.Null(_countriesService.GetCountryById(Guid.NewGuid()));
+
+        }
+
+        [Fact]
+        public void GetCountryById_Properly()
+        {
+            List<CountryAddRequest> dummy_countries_list_request = new List<CountryAddRequest>() {
+                new CountryAddRequest(){CountryName="Türkiye"},
+                new CountryAddRequest(){CountryName="Fransa"},
+                new CountryAddRequest(){CountryName="Amerika"}
+
+            };
+
+
+            List<CountryResponse> fake_country_response = new List<CountryResponse>();
+
+
+            foreach (CountryAddRequest countryAddRequest in dummy_countries_list_request)
+            {
+                fake_country_response.Add(_countriesService.AddCountry(countryAddRequest)!);
+            }
+
+
+
+            CountryResponse expectedCountryResponse = _countriesService.GetCountryById(fake_country_response[0].CountryId)!;
+
+            Assert.Contains(expectedCountryResponse, fake_country_response);
+
+        }
+        #endregion
 
     }
 }

@@ -22,7 +22,7 @@ namespace ServiceContracts.DTO
             CountryResponse countryResponse = (CountryResponse)obj;
 
 
-            return CountryId != countryResponse.CountryId && CountryName != countryResponse.CountryName;
+            return CountryId == countryResponse.CountryId && CountryName == countryResponse.CountryName;
 
         }
 
