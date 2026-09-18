@@ -196,16 +196,12 @@ namespace CRUDTests
 
             };
 
-
             List<CountryResponse> fake_country_response = new List<CountryResponse>();
-
 
             foreach (CountryAddRequest countryAddRequest in dummy_countries_list_request)
             {
                 fake_country_response.Add(_countriesService.AddCountry(countryAddRequest)!);
             }
-
-
 
             CountryResponse expectedCountryResponse = _countriesService.GetCountryById(fake_country_response[0].CountryId)!;
 
