@@ -8,9 +8,21 @@ namespace Services
     {
 
         private List<Person> _persons;
+
+        private readonly ICountriesService _countriesService;
         public PersonsService()
         {
             _persons = new List<Person>();
+            _countriesService = new CountriesService();
+        }
+
+        private PersonRespone ToPersonResponse(Person person)
+        {
+
+
+            PersonRespone personRespone = person.ToPersonResponse();
+            personRespone.Country = _countriesService.GetCountryById(person.CountryID)?.CountryName;
+            return personRespone;
         }
         public PersonRespone? AddPerson(PersonAddRequest? personAddRequest)
         {
@@ -29,6 +41,8 @@ namespace Services
 
             person.PersonID = Guid.NewGuid();
 
+
+
             if (person == null)
             {
 
@@ -37,7 +51,9 @@ namespace Services
 
             _persons.Add(person);
 
-            return person.ToPersonResponse();
+
+
+            return ToPersonResponse(person);
         }
 
         public List<PersonRespone> GetAllPersons()
