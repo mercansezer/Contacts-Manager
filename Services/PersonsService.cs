@@ -1,6 +1,7 @@
 ﻿using Entities;
 using ServiceContracts;
 using ServiceContracts.DTO;
+using Services.Helper;
 
 namespace Services
 {
@@ -32,16 +33,12 @@ namespace Services
                 throw new ArgumentNullException(nameof(personAddRequest));
             }
 
-            if (personAddRequest.PersonName == null)
-            {
-                throw new ArgumentException(nameof(personAddRequest));
-            }
+
+            ValidationHelpers.ModelValidation(personAddRequest);
 
             Person person = personAddRequest.ToPerson();
 
             person.PersonID = Guid.NewGuid();
-
-
 
             if (person == null)
             {
