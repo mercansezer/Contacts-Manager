@@ -189,23 +189,15 @@ namespace CRUDTests
         [Fact]
         public void GetCountryById_Properly()
         {
-            List<CountryAddRequest> dummy_countries_list_request = new List<CountryAddRequest>() {
-                new CountryAddRequest(){CountryName="Türkiye"},
-                new CountryAddRequest(){CountryName="Fransa"},
-                new CountryAddRequest(){CountryName="Amerika"}
+            //Arrange
+            CountryAddRequest? country_add_request = new CountryAddRequest() { CountryName = "China" };
+            CountryResponse country_response_from_add = _countriesService.AddCountry(country_add_request);
 
-            };
+            //Act
+            CountryResponse? country_response_from_get = _countriesService.GetCountryById(country_response_from_add?.CountryId);
 
-            List<CountryResponse> fake_country_response = new List<CountryResponse>();
-
-            foreach (CountryAddRequest countryAddRequest in dummy_countries_list_request)
-            {
-                fake_country_response.Add(_countriesService.AddCountry(countryAddRequest)!);
-            }
-
-            CountryResponse expectedCountryResponse = _countriesService.GetCountryById(fake_country_response[0].CountryId)!;
-
-            Assert.Contains(expectedCountryResponse, fake_country_response);
+            //Assert
+            Assert.Equal(country_response_from_add, country_response_from_get);
 
         }
         #endregion

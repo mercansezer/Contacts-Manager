@@ -57,5 +57,18 @@ namespace Services
         {
             return _persons.Select(person => person.ToPersonResponse()).ToList();
         }
+
+        public PersonRespone? GetPersonById(Guid? personId)
+        {
+
+            if (personId == null) return null;
+
+
+            PersonRespone? response = _persons.FirstOrDefault(p => p.PersonID == personId)?.ToPersonResponse();
+
+            if (response == null) return null;
+
+            return response;
+        }
     }
 }

@@ -65,5 +65,28 @@ namespace CRUDTests
 
         #endregion
 
+        #region GetPersonByPersonID
+        [Fact]
+        public void GetPersonByPersonID_IDNull()
+        {
+            Guid? personID = null;
+            Assert.Null(_personsService.GetPersonById(personID));
+        }
+
+        public void GetPersonByPersonID_Properly()
+        {
+            PersonAddRequest fake_request = new PersonAddRequest { PersonName = "Sezer Mercan", Email = "asdasda@hotmail.com", Address = "istanbul" };
+
+            PersonRespone fake_response = _personsService.AddPerson(fake_request)!;
+
+
+            PersonRespone expected_person = _personsService.GetPersonById(fake_response.PersonID);
+
+
+            Assert.Equal(fake_response, expected_person);
+
+        }
+        #endregion
+
     }
 }
