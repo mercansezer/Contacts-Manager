@@ -86,7 +86,52 @@ namespace CRUDTests
             Assert.Equal(fake_response, expected_person);
 
         }
+
+        [Fact]
+
         #endregion
 
+
+        #region GetAllPerson
+        public void GetAllPersons_Empty()
+        {
+
+            List<PersonAddRequest> fake_request = new List<PersonAddRequest>();
+
+            Assert.Empty(fake_request);
+
+        }
+
+        public void GetAllPersons_Properly()
+        {
+
+            List<PersonAddRequest> fake_request = new List<PersonAddRequest>() {
+                new PersonAddRequest() { PersonName="Sezer", Address="İstanbul",DateOfBirth=Convert.ToDateTime("23-09-1996"),Email="asdasd@gmail.com"
+                },
+                 new PersonAddRequest() { PersonName="Ahmet", Address="Ankara",DateOfBirth=Convert.ToDateTime("23-09-1990"),Email="asdaasdasdasdaasd@gmail.com"
+                }
+            };
+
+            List<PersonRespone> fake_responses = new List<PersonRespone>();
+
+            foreach (PersonAddRequest request in fake_request)
+            {
+                fake_responses.Add(_personsService.AddPerson(request)!);
+            }
+
+            List<PersonRespone> expected = _personsService.GetAllPersons();
+
+
+            foreach (PersonRespone response in fake_responses)
+            {
+                Assert.Contains(response, expected);
+            }
+
+
+        }
+        #endregion 
+
     }
+
+
 }
