@@ -1,6 +1,7 @@
 ﻿using ServiceContracts;
 using ServiceContracts.DTO;
 using Services;
+using Xunit.Abstractions;
 
 namespace CRUDTests
 {
@@ -8,10 +9,12 @@ namespace CRUDTests
     {
 
         private readonly IPersonsService _personsService;
+        private readonly ITestOutputHelper _testOutputHelper;
 
-        public PersonsServiceTest()
+        public PersonsServiceTest(ITestOutputHelper testOutputHelper)
         {
             _personsService = new PersonsService();
+            _testOutputHelper = testOutputHelper;
         }
 
 
@@ -47,6 +50,8 @@ namespace CRUDTests
             PersonAddRequest? request = new PersonAddRequest { PersonName = "Sezer", Address = "Ankara", Email = "asda@gmail.com" };
 
             PersonRespone? personResponse = _personsService.AddPerson(request!);
+
+            _testOutputHelper.WriteLine(personResponse?.ToString());
 
 
             Assert.NotNull(personResponse);
@@ -87,12 +92,13 @@ namespace CRUDTests
 
         }
 
-        [Fact]
 
         #endregion
 
 
         #region GetAllPerson
+
+        [Fact]
         public void GetAllPersons_Empty()
         {
 
@@ -102,6 +108,9 @@ namespace CRUDTests
 
         }
 
+
+
+        [Fact]
         public void GetAllPersons_Properly()
         {
 
@@ -129,8 +138,72 @@ namespace CRUDTests
 
 
         }
-        #endregion 
+        #endregion
 
+
+        #region GetFilteredPersons
+        [Fact]
+        public void GetFilteredPerson_SearchStringNull()
+        {
+            string? searchBy = null;
+            string? searchString = null;
+
+            List<PersonAddRequest> fake_person_requests = new List<PersonAddRequest>() {
+                new PersonAddRequest() { Address = "İstanbul", DateOfBirth = Convert.ToDateTime("23.09.1996"), Email = "sezermercan12@hotmail.com", Gender = GenderOptions.Male, PersonName = "Sezer" },
+                  new PersonAddRequest() { Address = "Ankara", DateOfBirth = Convert.ToDateTime("03.04.1993"), Email = "alimercan12@hotmail.com", Gender = GenderOptions.Male, PersonName = "Ali" },
+                    new PersonAddRequest() { Address = "Bingöl", DateOfBirth = Convert.ToDateTime("12.03.1999"), Email = "mehmetmercan12@hotmail.com", Gender = GenderOptions.Male, PersonName = "Mehmet" }
+            };
+
+            List<PersonRespone> fake_person_responses = new List<PersonRespone>();
+
+            foreach (PersonAddRequest fake_request in fake_person_requests)
+            {
+                fake_person_responses.Add(_personsService.AddPerson(fake_request)!);
+            }
+
+
+            List<PersonRespone> actual_responses = _personsService.GetFilteredPerson(searchBy, searchString);
+
+            Assert.Equal(fake_person_responses, actual_responses);
+        }
+
+        [Fact]
+        public void GetFilteredPerson_Properly()
+        {
+            string? searchBy = "PersonName";
+            string? searchString = "Sezer";
+
+            List<PersonAddRequest> fake_person_requests = new List<PersonAddRequest>() {
+                new PersonAddRequest() { Address = "İstanbul", DateOfBirth = Convert.ToDateTime("23.09.1996"), Email = "sezermercan12@hotmail.com", Gender = GenderOptions.Male, PersonName = "Sezer" },
+                  new PersonAddRequest() { Address = "Ankara", DateOfBirth = Convert.ToDateTime("03.04.1993"), Email = "alimercan12@hotmail.com", Gender = GenderOptions.Male, PersonName = "Ali" },
+                    new PersonAddRequest() { Address = "Bingöl", DateOfBirth = Convert.ToDateTime("12.03.1999"), Email = "mehmetmercan12@hotmail.com", Gender = GenderOptions.Male, PersonName = "Mehmet" }
+            };
+
+            List<PersonRespone> fake_person_responses = new List<PersonRespone>();
+
+            foreach (PersonAddRequest fake_request in fake_person_requests)
+            {
+                fake_person_responses.Add(_personsService.AddPerson(fake_request)!);
+            }
+
+            List<PersonRespone> expected_values = fake_person_responses.Where(p => p.PersonName == searchString).ToList();
+
+            List<PersonRespone> actualResponses = _personsService.GetFilteredPerson(searchBy, searchString);
+
+            // Önce listelerin eleman sayısı aynı mı diye bakabilirsin
+            Assert.Equal(expected_values.Count, actualResponses.Count);
+
+
+            foreach (var expectedPerson in expected_values)
+            {
+                Assert.Contains(actualResponses, actual =>
+                    actual.PersonID == expectedPerson.PersonID &&
+                    actual.PersonName == expectedPerson.PersonName &&
+                    actual.Email == expectedPerson.Email);
+            }
+        }
+
+        #endregion
     }
 
 

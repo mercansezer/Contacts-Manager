@@ -70,5 +70,24 @@ namespace Services
 
             return response;
         }
+
+        public List<PersonRespone> GetFilteredPerson(string? searchBy, string? searchString)
+        {
+
+            if (searchBy == null || searchString == null) return _persons.Select(p => p.ToPersonResponse()).ToList();
+
+            var filteredQuery = searchBy switch
+            {
+                nameof(PersonRespone.PersonName) => _persons.Where(temp => temp.PersonName != null && temp.PersonName.Contains(searchString)),
+
+                nameof(PersonRespone.Email) => _persons.Where(temp => temp.Email != null && temp.Email.Contains(searchString)),
+
+                nameof(PersonRespone.Address) => _persons.Where(temp => temp.Address != null && temp.Address.Contains(searchString)),
+
+                _ => _persons
+            };
+
+            return filteredQuery.Select(temp => temp.ToPersonResponse()).ToList();
+        }
     }
 }

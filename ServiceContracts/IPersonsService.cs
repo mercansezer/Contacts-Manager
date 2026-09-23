@@ -10,5 +10,7 @@ namespace ServiceContracts
         List<PersonRespone> GetAllPersons();
 
         PersonRespone? GetPersonById(Guid? personId);
+
+        List<PersonRespone> GetFilteredPerson(string? searchBy, string? searchString);
     }
 }
