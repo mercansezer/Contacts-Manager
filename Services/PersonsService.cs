@@ -20,8 +20,6 @@ namespace Services
 
         private PersonRespone ToPersonResponse(Person person)
         {
-
-
             PersonRespone personRespone = person.ToPersonResponse();
             personRespone.Country = _countriesService.GetCountryById(person.CountryID)?.CountryName;
             return personRespone;
@@ -134,6 +132,31 @@ namespace Services
             };
 
             return sortedPersons;
+        }
+
+        public PersonRespone? UpdatePerson(PersonUpdateRequest? personUpdateRequest)
+        {
+
+            if (personUpdateRequest is null) throw new ArgumentNullException(nameof(personUpdateRequest));
+
+
+            ValidationHelpers.ModelValidation(personUpdateRequest);
+
+            Person? person = _persons.FirstOrDefault(person => person.PersonID == personUpdateRequest.PersonID);
+
+            if (person == null) throw new ArgumentException(nameof(personUpdateRequest));
+
+            person.PersonName = personUpdateRequest.PersonName;
+            person.Email = personUpdateRequest.Email;
+            person.DateOfBirth = personUpdateRequest.DateOfBirth;
+            person.Gender = personUpdateRequest.Gender?.ToString();
+            person.Address = personUpdateRequest.Address;
+            person.CountryID = personUpdateRequest.CountryID;
+            person.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
+
+
+
+            return person.ToPersonResponse();
         }
     }
 }

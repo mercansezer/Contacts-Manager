@@ -250,6 +250,71 @@ namespace CRUDTests
 
 
         #endregion
+
+        #region GetUpdatedPerson
+
+        [Fact]
+        public void GetUpdatedPerson_Null()
+        {
+
+            PersonUpdateRequest? personUpdateRequest = null;
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _personsService.UpdatePerson(personUpdateRequest);
+            });
+
+        }
+
+        [Fact]
+        public void GetUpdatedPerson_PersonNull()
+        {
+
+            PersonUpdateRequest fake_request_update = new PersonUpdateRequest() { PersonID = Guid.NewGuid(), Address = "Berlin", DateOfBirth = DateTime.Parse("23.09.1996"), PersonName = "Sezer", Email = "sezermercan12@hotmail.com", Gender = GenderOptions.Male };
+
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _personsService.UpdatePerson(fake_request_update);
+            });
+
+        }
+
+        [Fact]
+        public void GetUpdatedPerson_Properly()
+        {
+            PersonAddRequest person1 = new PersonAddRequest() { Address = "İstanbul", Email = "sezermercan12@hotmail.com", PersonName = "Sezer", Gender = GenderOptions.Male, DateOfBirth = DateTime.Parse("23.09.1996") };
+
+            PersonAddRequest person2 = new PersonAddRequest() { Address = "Ankara", Email = "ahmetmercan12@hotmail.com", PersonName = "Ahmet", Gender = GenderOptions.Male, DateOfBirth = DateTime.Parse("23.09.1990") };
+
+            PersonAddRequest person3 = new PersonAddRequest() { Address = "Bingöl", Email = "yusufmercan12@hotmail.com", PersonName = "Yusug", Gender = GenderOptions.Male, DateOfBirth = DateTime.Parse("23.09.1992") };
+
+            PersonAddRequest person4 = new PersonAddRequest() { Address = "Muş", Email = "kerim12@hotmail.com", PersonName = "Kerim", Gender = GenderOptions.Male, DateOfBirth = DateTime.Parse("23.09.2000") };
+
+
+            List<PersonAddRequest> fake_requests = new List<PersonAddRequest> { person1, person2, person3, person4 };
+
+            List<PersonRespone> fake_responses = new List<PersonRespone>();
+
+            foreach (PersonAddRequest fake_request in fake_requests)
+            {
+                fake_responses.Add(_personsService.AddPerson(fake_request)!);
+            }
+
+
+            PersonUpdateRequest fake_request_update = new PersonUpdateRequest() { PersonID = fake_responses[0].PersonID, Address = "Berlin", DateOfBirth = DateTime.Parse("23.09.1996"), PersonName = "Sezer", Email = "sezermercan12@hotmail.com", Gender = GenderOptions.Male };
+
+
+            PersonRespone expected_value = fake_request_update.ToPerson().ToPersonResponse();
+
+            PersonRespone? actual_value = _personsService.UpdatePerson(fake_request_update);
+
+            Assert.Equal(expected_value, actual_value);
+
+
+
+        }
+        #endregion
     }
 
 

@@ -1,4 +1,5 @@
 ﻿using Entities;
+using ServiceContracts.DTO;
 
 public class PersonRespone
 {
@@ -41,6 +42,11 @@ public class PersonRespone
     public override string ToString()
     {
         return $"Person ID: {PersonID}, Person Name: {PersonName}, Email: {Email}, Date of Birth: {DateOfBirth?.ToString("dd MMM yyyy")}, Gender: {Gender}, Country ID: {CountryID}, Country: {Country}, Address: {Address}, Receive News Letters: {ReceiveNewsLetters}";
+    }
+
+    public PersonUpdateRequest ToPersonUpdateRequest()
+    {
+        return new PersonUpdateRequest() { PersonID = PersonID, Address = Address, CountryID = CountryID, DateOfBirth = DateOfBirth, Email = Email, PersonName = PersonName, ReceiveNewsLetters = ReceiveNewsLetters };
     }
 }
 public static class PersonExtensions
