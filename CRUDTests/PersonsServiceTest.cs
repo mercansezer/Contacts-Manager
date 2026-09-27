@@ -1,5 +1,6 @@
 ﻿using ServiceContracts;
 using ServiceContracts.DTO;
+using ServiceContracts.Enums;
 using Services;
 using Xunit.Abstractions;
 
@@ -10,11 +11,13 @@ namespace CRUDTests
 
         private readonly IPersonsService _personsService;
         private readonly ITestOutputHelper _testOutputHelper;
+        private readonly ICountriesService _countriesService;
 
         public PersonsServiceTest(ITestOutputHelper testOutputHelper)
         {
             _personsService = new PersonsService();
             _testOutputHelper = testOutputHelper;
+            _countriesService = new CountriesService();
         }
 
 
@@ -202,6 +205,49 @@ namespace CRUDTests
                     actual.Email == expectedPerson.Email);
             }
         }
+
+        #endregion
+
+        #region GetSortedPersons
+        [Fact]
+        public void GetSortedPersons()
+        {
+
+            //Arrange
+            PersonAddRequest person1 = new PersonAddRequest() { Address = "İstanbul", Email = "sezermercan12@hotmail.com", PersonName = "Sezer", Gender = GenderOptions.Male, DateOfBirth = DateTime.Parse("23.09.1996") };
+
+            PersonAddRequest person2 = new PersonAddRequest() { Address = "Ankara", Email = "ahmetmercan12@hotmail.com", PersonName = "Ahmet", Gender = GenderOptions.Male, DateOfBirth = DateTime.Parse("23.09.1990") };
+
+            PersonAddRequest person3 = new PersonAddRequest() { Address = "Bingöl", Email = "yusufmercan12@hotmail.com", PersonName = "Yusug", Gender = GenderOptions.Male, DateOfBirth = DateTime.Parse("23.09.1992") };
+
+            PersonAddRequest person4 = new PersonAddRequest() { Address = "Muş", Email = "kerim12@hotmail.com", PersonName = "Kerim", Gender = GenderOptions.Male, DateOfBirth = DateTime.Parse("23.09.2000") };
+
+
+            List<PersonAddRequest> fake_requests = new List<PersonAddRequest> { person1, person2, person3, person4 };
+
+            List<PersonRespone> fake_response = new List<PersonRespone>();
+
+            foreach (PersonAddRequest fake_request in fake_requests)
+            {
+                fake_response.Add(_personsService.AddPerson(fake_request)!);
+            }
+
+
+            string sortBy = "PersonName";
+
+            SortOrderOptions sortOption = SortOrderOptions.ASC;
+
+
+            List<PersonRespone> expected_values = fake_response.OrderBy(x => x.PersonName).ToList();
+
+
+            List<PersonRespone> actual_values = _personsService.GetSortedPersons(fake_response, sortBy, sortOption);
+
+            Assert.Equal(expected_values, actual_values);
+
+
+        }
+
 
         #endregion
     }
