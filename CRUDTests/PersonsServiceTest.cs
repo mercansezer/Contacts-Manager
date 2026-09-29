@@ -315,7 +315,51 @@ namespace CRUDTests
 
         }
         #endregion
-    }
 
+
+        #region DeletePerson
+        [Fact]
+        public void DeletePerson_InvalidPersonId()
+        {
+            Guid? personId = null;
+
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _personsService.DeletePerson(personId);
+            });
+
+        }
+
+
+        [Fact]
+        public void DeletePerson_Properly()
+        {
+            // Arrange
+            PersonAddRequest person = new PersonAddRequest()
+            {
+                Address = "İstanbul",
+                Email = "sezermercan12@hotmail.com",
+                PersonName = "Sezer",
+                Gender = GenderOptions.Male,
+                DateOfBirth = DateTime.Parse("23.09.1996")
+            };
+
+            // Act
+            PersonRespone addedPerson = _personsService.AddPerson(person)!;
+
+            // Assert 1: Kişinin null eklenmediğinden emin oluyoruz
+            Assert.NotNull(addedPerson);
+
+            // Assert 2: Silme işleminin true döndüğünü doğruluyoruz
+            Assert.True(_personsService.DeletePerson(addedPerson.PersonID));
+
+            // Assert 3: Tekrar çağrıldığında null geldiğini (silindiğini) doğruluyoruz
+            Assert.Null(_personsService.GetPersonById(addedPerson.PersonID));
+
+
+        }
+        #endregion
+    }
 
 }
