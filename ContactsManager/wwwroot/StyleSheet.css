@@ -101,6 +101,10 @@
     width: 25%;
 }
 
+.result {
+    margin-top: 10px;
+    color: red;
+}
 .w-50 {
     width: 50%;
 }
@@ -369,3 +373,4 @@ a.link-hover:hover {
             width: auto;
         }
 }
+
