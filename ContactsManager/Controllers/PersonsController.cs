@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
+using ServiceContracts.DTO;
 using ServiceContracts.Enums;
 
 namespace ContactsManager.Controllers
@@ -8,10 +9,14 @@ namespace ContactsManager.Controllers
 
     {
         private readonly IPersonsService _personsService;
-        public PersonsController(IPersonsService personsService)
+
+        private readonly ICountriesService _countriesService;
+        public PersonsController(IPersonsService personsService, ICountriesService countriesService)
         {
 
             _personsService = personsService;
+            _countriesService = countriesService;
+
         }
 
         [Route("persons/index")]
@@ -43,6 +48,39 @@ namespace ContactsManager.Controllers
 
 
             return View(sortedPersons);
+        }
+
+
+
+        [Route("persons/create")]
+        [HttpGet]
+        public IActionResult Create()
+        {
+
+            List<CountryResponse> countries = _countriesService.GetAllCountries();
+            ViewBag.Countries = countries;
+
+            return View();
+        }
+
+        [HttpPost]
+        [Route("persons/create")]
+        public IActionResult Create(PersonAddRequest personAddRequest)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                List<CountryResponse> countries = _countriesService.GetAllCountries();
+                ViewBag.Countries = countries;
+
+                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+
+                return View();
+            }
+
+            _personsService.AddPerson(personAddRequest);
+
+            return RedirectToAction("Index", "Persons");
         }
     }
 }
