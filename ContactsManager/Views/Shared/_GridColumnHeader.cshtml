@@ -1,0 +1,25 @@
+﻿
+
+
+@if (@ViewBag.CurrentSortOrder.ToString() == "ASC" && @ViewBag.CurrentSortBy ==  @ViewBag.ColumnName)
+{
+    <th>
+        <a href="?searchBy=@ViewBag.CurrentSearchBy&searchString=@ViewBag.CurrentSearchString&sortBy=@ViewBag.ColumnName&sortOption=DESC">@ViewBag.ColumnName</a>
+        <i class="fa-solid fa-sort-up"></i>
+    </th>
+}
+else if (@ViewBag.CurrentSortOrder.ToString() == "DESC" && @ViewBag.CurrentSortBy == @ViewBag.ColumnName)
+{
+    <th>
+        <a href="?searchBy=@ViewBag.CurrentSearchBy&searchString=@ViewBag.CurrentSearchString&sortBy=@ViewBag.ColumnName&sortOption=ASC">@ViewBag.ColumnName</a>
+        <i class="fa-solid fa-sort-down"></i>
+    </th>
+}
+
+else
+{
+    <th>
+        <a href="?searchBy=@ViewBag.CurrentSearchBy&searchString=@ViewBag.CurrentSearchString&sortBy=@ViewBag.ColumnName&sortOption=DESC">@ViewBag.ColumnName</a>
+        
+    </th>
+}

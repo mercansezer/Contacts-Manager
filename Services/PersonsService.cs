@@ -78,7 +78,7 @@ namespace Services
 
         public List<PersonRespone> GetAllPersons()
         {
-            return _persons.Select(person => person.ToPersonResponse()).ToList();
+            return _persons.Select(person => ToPersonResponse(person)).ToList();
         }
 
         public PersonRespone? GetPersonById(Guid? personId)
@@ -97,7 +97,7 @@ namespace Services
         public List<PersonRespone> GetFilteredPerson(string? searchBy, string? searchString)
         {
 
-            if (searchBy == null || searchString == null) return _persons.Select(p => p.ToPersonResponse()).ToList();
+            if (searchBy == null || searchString == null) return _persons.Select(p => ToPersonResponse(p)).ToList();
 
             var filteredQuery = searchBy switch
             {
