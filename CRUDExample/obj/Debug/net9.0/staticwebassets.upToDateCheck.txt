@@ -1,0 +1,9 @@
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\CRUDExample\wwwroot\jquery.validate.unobtrusive.min.js
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\CRUDExample\wwwroot\jquery.min.js
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\CRUDExample\wwwroot\StyleSheet.css
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\CRUDExample\wwwroot\jquery.validate.min.js
+wwwroot\jquery.min.js
+wwwroot\jquery.validate.min.js
+wwwroot\jquery.validate.unobtrusive.min.js
+wwwroot\logo.png
+wwwroot\StyleSheet.css

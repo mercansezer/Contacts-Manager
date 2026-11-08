@@ -1,0 +1,16 @@
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\bin\Debug\net9.0\ServiceContracts.deps.json
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\bin\Debug\net9.0\ServiceContracts.dll
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\bin\Debug\net9.0\ServiceContracts.pdb
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\bin\Debug\net9.0\Entities.dll
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\bin\Debug\net9.0\Entities.pdb
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ServiceContracts.csproj.AssemblyReference.cache
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ServiceContracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ServiceContracts.AssemblyInfoInputs.cache
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ServiceContracts.AssemblyInfo.cs
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ServiceContracts.csproj.CoreCompileInputs.cache
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ServiceContracts.sourcelink.json
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ServiceC.04662A29.Up2Date
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ServiceContracts.dll
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\refint\ServiceContracts.dll
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ServiceContracts.pdb
+C:\Users\MMrcn\Desktop\Software\ASP.NET CORE\18-Entity Framework Core [MVC and Web API]\Contacts Manager\ContactsManager\ServiceContracts\obj\Debug\net9.0\ref\ServiceContracts.dll
